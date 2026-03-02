@@ -12,19 +12,11 @@ jobs:
       - name: Клонируем репозиторий
         uses: actions/checkout@v4
 
-      - name: Устанавливаем Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-        
-      - name: Устанавливаем зависимости
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest
-        
-      - name: Запускаем тесты
-        run: |
-          pytest
+      - name: Docker поднимаем
+        run: docker build -t myapp .
+
+      - name: Тесты внутри контейнера
+        run: docker run myapp
         
       - name: CD процесс (Деплой)
         run: |
